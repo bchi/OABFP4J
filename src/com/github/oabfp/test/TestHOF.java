@@ -6,7 +6,7 @@ import static com.github.oabfp.OABFPLib.multiply;
 import static com.github.oabfp.OABFPLib.sum;
 import static com.github.oabfp.OABFPLib.display;
 
-import com.github.oabfp.OABFP.M;
+import com.github.oabfp.OABFP.Fn;
 
 public class TestHOF extends Object {
 
@@ -16,14 +16,14 @@ public class TestHOF extends Object {
 
 	public static void main(String[] args) throws Exception {
 
-		M m3 = new M() {
-			public Object m(Object... args) {
+		Fn m3 = new Fn() {
+			public Object f(Object... args) {
 				return test3();
 			}
 		};
 
-		M m4 = new M() {
-			public Object[] m(Object... args) {
+		Fn m4 = new Fn() {
+			public Object[] f(Object... args) {
 				if (args.length != 0) throw new RuntimeException("arguments not allowed.");
 				return new Object[] { sum, 2.0, 3.0, 4.0,
 						new Object[] { multiply, 10.0, 10.0 } };
@@ -32,14 +32,14 @@ public class TestHOF extends Object {
 
 		eval(display, "Test1");
 
-		eval(display, new M() {
-			public Object m(Object... args) {
+		eval(display, new Fn() {
+			public Object f(Object... args) {
 				return "Test2";
 			}
 		});
 
-		eval(display, new M() {
-			public Object m(Object... args) {
+		eval(display, new Fn() {
+			public Object f(Object... args) {
 				return test3();
 			}
 		});
