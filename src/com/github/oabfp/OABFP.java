@@ -21,8 +21,32 @@ public class OABFP {
 	 * @author bchi49
 	 * 
 	 */
-	public interface M {
-		public Object m(Object... args);
+	public interface Fn {
+		public Object f(Object... args);
+	}
+
+	public interface F0 {
+		public Object f();
+	}
+
+	public interface F1 {
+		public Object f(Object p1);
+	}
+
+	public interface F2 {
+		public Object f(Object p1, Object p2);
+	}
+
+	public interface F3 {
+		public Object f(Object p1, Object p2, Object p3);
+	}
+
+	public interface F4 {
+		public Object f(Object p1, Object p2, Object p3, Object p4);
+	}
+
+	public interface F5 {
+		public Object f(Object p1, Object p2, Object p3, Object p4, Object p5);
 	}
 
 	// Empty Object array
@@ -59,14 +83,41 @@ public class OABFP {
 	public static Object eval(Object... objAndArgs) {
 		if (objAndArgs != null && objAndArgs.length > 0) {
 			Object o = objAndArgs[0];
-			if (o instanceof M) {
-				M m = (M) o;
+			if (o instanceof Fn) {
+				Fn m = (Fn) o;
 				Object[] args = getArgs(1, objAndArgs);
-				return eval(m.m(args));
+				return eval(m.f(args));
 			} else if (o instanceof Object[]) {
 				// must do this cast, otherwise infinite loop occurs.
 				Object[] oa = (Object[]) o;
 				return eval(oa); // lazy evaluation
+			} else if (o instanceof F0) {
+				return ((F0) o).f();
+			} else if (o instanceof F1) {
+				Object[] args = getArgs(1, objAndArgs);
+				if (args.length != 1)
+					throw new RuntimeException("One parameter is required.");
+				return ((F1) o).f(args[0]);
+			} else if (o instanceof F2) {
+				Object[] args = getArgs(1, objAndArgs);
+				if (args.length != 1)
+					throw new RuntimeException("Two parameters are required.");
+				return ((F2) o).f(args[0], args[1]);
+			} else if (o instanceof F3) {
+				Object[] args = getArgs(1, objAndArgs);
+				if (args.length != 1)
+					throw new RuntimeException("Three parameters are required.");
+				return ((F3) o).f(args[0], args[1], args[2]);
+			} else if (o instanceof F4) {
+				Object[] args = getArgs(1, objAndArgs);
+				if (args.length != 1)
+					throw new RuntimeException("Four parameters are required.");
+				return ((F4) o).f(args[0], args[1], args[2], args[3]);
+			} else if (o instanceof F5) {
+				Object[] args = getArgs(1, objAndArgs);
+				if (args.length != 1)
+					throw new RuntimeException("Five parameters are required.");
+				return ((F5) o).f(args[0], args[1], args[2], args[3], args[4]);
 			} else {
 				if (objAndArgs.length > 1)
 					throw new RuntimeException(
