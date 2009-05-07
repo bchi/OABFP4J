@@ -3,7 +3,7 @@ package com.github.oabfp.test;
 import static com.github.oabfp.OABFP.eval;
 import static com.github.oabfp.OABFPLib.display;
 
-import com.github.oabfp.OABFP.M;
+import com.github.oabfp.OABFP.Fn;
 
 public class TestHOF2 extends Object {
 
@@ -12,8 +12,8 @@ public class TestHOF2 extends Object {
 		/*
 		 * f(x) = x + 3
 		 */
-		final M xPlus3 = new M() {
-			public Object m(Object... args) {
+		final Fn xPlus3 = new Fn() {
+			public Object f(Object... args) {
 				return (Integer)eval(args[0]) + 3;
 			}
 		};
@@ -21,8 +21,8 @@ public class TestHOF2 extends Object {
 		/*
 		 * g (function, x) = f(x) * f(x)
 		 */
-		final M x2 = new M() {
-			public Object m(Object... args) {
+		final Fn x2 = new Fn() {
+			public Object f(Object... args) {
 				return (Integer)eval(args[0]) * (Integer)eval(args[0]);
 			}
 		};
