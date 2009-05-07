@@ -4,7 +4,7 @@ import static com.github.oabfp.OABFP.eval;
 import static com.github.oabfp.OABFPLib.square;
 import static com.github.oabfp.OABFPLib.display;
 
-import com.github.oabfp.OABFP.M;
+import com.github.oabfp.OABFP.*;
 
 public class TestHOF3 extends Object {
 
@@ -15,28 +15,22 @@ public class TestHOF3 extends Object {
 		/*
 		 * f(x) = x + 3
 		 */
-		final M xPlus3 = new M() {
-			public Object m(Object... args) {
-				if (args.length != 1)
-					throw new RuntimeException("should have 1 argument only");
-				return Double.parseDouble(eval(args[0]).toString()) + 3;
+		final F1 xPlus3 = new F1() {
+			public Object f(Object arg) {
+				return Double.parseDouble(eval(arg).toString()) + 3;
 			}
 		};
 
-		final M getTime = new M() {
-			public Object m(Object... args) {
-				if (args.length != 0)
-					throw new RuntimeException("shouldn't have any arguments");
+		final F0 getTime = new F0() {
+			public Object f() {
 				return new java.util.Date().getTime() - time;
 			}
 		};
 
 		// currying
-		final M xPlus3squareY = new M() {
-			public Object m(Object... args) {
-				if (args.length != 1)
-					throw new RuntimeException("should have 1 argument.");
-				return new Object[] { xPlus3, new Object[] { square, args[0] } };
+		final F1 xPlus3squareY = new F1() {
+			public Object f(Object arg) {
+				return new Object[] { xPlus3, new Object[] { square, arg } };
 			}
 		};
 
